@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '@/app/context/CartContext';
-import { products } from '@/data/products'; // Import your actual product data
+import products from '@/data/products';
+import products from '../../../data/products';
+
 
 export default function ProductDetailPage() {
   const params = useParams();
