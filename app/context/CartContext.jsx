@@ -57,24 +57,23 @@ export function CartProvider({ children }) {
 
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  const getTotalPrice = () => {
-    return cart.reduce((sum, item) => {
-      const price = parseFloat(item.price || 0);
-      const quantity = item.quantity || 1;
-      return sum + (price * quantity);
-    }, 0);
-  };
+  const cartTotal = cart.reduce((sum, item) => {
+    const price = parseFloat(item.price || 0);
+    const quantity = item.quantity || 1;
+    return sum + (price * quantity);
+  }, 0);
 
   return (
     <CartContext.Provider
       value={{
-        cart,
+        cart, // This is the array of cart items
+        cartItems: cart, // Add alias for cartItems
         cartCount,
+        cartTotal,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
-        getTotalPrice,
       }}
     >
       {children}
@@ -82,4 +81,10 @@ export function CartProvider({ children }) {
   );
 }
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+};

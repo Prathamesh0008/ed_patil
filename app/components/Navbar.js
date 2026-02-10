@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Link from 'next/link';  
 import { usePathname } from 'next/navigation';
 import { ShoppingCart, User, Menu, X, Search, ChevronDown, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -22,7 +22,6 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
-    { name: 'Categories', href: '/categories' },
     { name: 'Consultation', href: '/consultation' },
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
