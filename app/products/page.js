@@ -175,11 +175,11 @@ function ProductCard({ product }) {
 }
 
 /* ----------------------------------------
-   Enhanced Filter Box with Updated Gradients
+   Enhanced Filter Box with Glass Effect
 ---------------------------------------- */
 function FilterBox({ title, items, selected, onSelect }) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+    <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-gray-100/50 glass-effect">
       <div className="flex items-center gap-2 mb-4">
         <div className="h-1 w-8 bg-gradient-to-r from-[#2596be] to-[#122E34] rounded-full"></div>
         <h3 className="font-bold text-gray-800 text-lg">{title}</h3>
@@ -190,14 +190,14 @@ function FilterBox({ title, items, selected, onSelect }) {
           onClick={() => onSelect('All')}
           className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 group ${
             selected === 'All' 
-              ? 'bg-gradient-to-r from-[#2596be] to-[#122E34] text-white shadow-md' 
-              : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#2596be]/5 hover:to-[#122E34]/5'
+              ? 'bg-gradient-to-r from-[#2596be] to-[#122E34] text-white shadow-md hover:shadow-lg transform hover:scale-[1.02]' 
+              : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#2596be]/10 hover:to-[#122E34]/10 hover:shadow-sm'
           }`}
         >
-          <div className={`w-2 h-2 rounded-full ${selected === 'All' ? 'bg-white' : 'bg-gradient-to-r from-[#2596be] to-[#122E34]'}`}></div>
+          <div className={`w-3 h-3 rounded-full transition-all duration-300 ${selected === 'All' ? 'bg-white scale-125' : 'bg-gradient-to-r from-[#2596be]/50 to-[#122E34]/50'}`}></div>
           <span className="font-medium">All</span>
           {selected === 'All' && (
-            <svg className="w-4 h-4 ml-auto opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 ml-auto opacity-80 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
             </svg>
           )}
@@ -209,14 +209,14 @@ function FilterBox({ title, items, selected, onSelect }) {
             onClick={() => onSelect(item)}
             className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 group ${
               selected === item 
-                ? 'bg-gradient-to-r from-[#2596be] to-[#122E34] text-white shadow-md' 
-                : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#2596be]/5 hover:to-[#122E34]/5'
+                ? 'bg-gradient-to-r from-[#2596be] to-[#122E34] text-white shadow-md hover:shadow-lg transform hover:scale-[1.02]' 
+                : 'text-gray-700 hover:bg-gradient-to-r hover:from-[#2596be]/10 hover:to-[#122E34]/10 hover:shadow-sm'
             }`}
           >
-            <div className={`w-2 h-2 rounded-full ${selected === item ? 'bg-white' : 'bg-gradient-to-r from-[#2596be] to-[#122E34]'}`}></div>
+            <div className={`w-3 h-3 rounded-full transition-all duration-300 ${selected === item ? 'bg-white scale-125' : 'bg-gradient-to-r from-[#2596be]/50 to-[#122E34]/50'}`}></div>
             <span className="font-medium">{item}</span>
             {selected === item && (
-              <svg className="w-4 h-4 ml-auto opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 ml-auto opacity-80 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
             )}
@@ -237,9 +237,9 @@ function Pagination({ page, total, onChange }) {
       <button
         disabled={page === 1}
         onClick={() => onChange(page - 1)}
-        className="px-6 py-2.5 rounded-xl font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl hover:scale-[1.05] hover:opacity-90 transition-all duration-300 flex items-center gap-2"
+        className="px-6 py-2.5 rounded-xl font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl hover:scale-[1.05] hover:opacity-90 transition-all duration-300 flex items-center gap-2 group"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
         </svg>
         Prev
@@ -264,10 +264,10 @@ function Pagination({ page, total, onChange }) {
       <button
         disabled={page === total}
         onClick={() => onChange(page + 1)}
-        className="px-6 py-2.5 rounded-xl font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl hover:scale-[1.05] hover:opacity-90 transition-all duration-300 flex items-center gap-2"
+        className="px-6 py-2.5 rounded-xl font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl hover:scale-[1.05] hover:opacity-90 transition-all duration-300 flex items-center gap-2 group"
       >
         Next
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -280,14 +280,12 @@ function Pagination({ page, total, onChange }) {
    Main Page
 ---------------------------------------- */
 export default function ProductsPage() {
-
   const [brand, setBrand] = useState('All');
   const [compound, setCompound] = useState('All');
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
   const perPage = 12;
-
   const allProducts = getAllProducts();
 
   /* Get Filters */
@@ -296,103 +294,115 @@ export default function ProductsPage() {
 
   /* Filter */
   const filtered = allProducts.filter((p) => {
-
     if (brand !== 'All' && p.brand !== brand) return false;
     if (compound !== 'All' && p.composition !== compound) return false;
-
-    if (
-      search &&
-      !p.name.toLowerCase().includes(search.toLowerCase())
-    ) return false;
-
+    if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
 
   /* Pagination */
   const totalPages = Math.ceil(filtered.length / perPage);
-
-  const data = filtered.slice(
-    (page - 1) * perPage,
-    page * perPage
-  );
+  const data = filtered.slice((page - 1) * perPage, page * perPage);
 
   useEffect(() => {
     setPage(1);
   }, [brand, compound, search]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-[#2596be]/5 to-[#122E34]/5 rounded-full -translate-x-32 -translate-y-32"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-[#2596be]/5 to-[#122E34]/5 rounded-full translate-x-48 translate-y-48"></div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 relative z-10">
 
         <div className="flex flex-col lg:flex-row gap-8">
 
-          {/* Sidebar */}
+          {/* Sidebar with enhanced design */}
           <div className="lg:w-1/4 space-y-6">
-
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for medicines..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full p-4 pl-12 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-[#2596be] focus:ring-2 focus:ring-[#2596be]/20 transition-all duration-300 bg-white shadow-sm"
-              />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+            {/* Search Bar with dark text */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#2596be] to-[#122E34] rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-500"></div>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search for medicines..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full p-4 pl-12 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-[#2596be] focus:ring-2 focus:ring-[#2596be]/20 transition-all duration-300 bg-white shadow-lg text-gray-900 placeholder-gray-500"
+                />
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
               </div>
             </div>
 
             <div className="sticky top-8 space-y-6">
-              <div className="bg-gradient-to-br from-white to-gray-50 p-1 rounded-2xl shadow-lg">
-                <FilterBox
-                  title="Brands"
-                  items={brands}
-                  selected={brand}
-                  onSelect={setBrand}
-                />
+              {/* Filter boxes with enhanced styling */}
+              <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                <div className="bg-gradient-to-br from-white/80 to-gray-50/80 p-1 rounded-2xl shadow-xl backdrop-blur-sm border border-gray-100/30">
+                  <FilterBox
+                    title="Brands"
+                    items={brands}
+                    selected={brand}
+                    onSelect={setBrand}
+                  />
+                </div>
               </div>
 
-              <div className="bg-gradient-to-br from-white to-gray-50 p-1 rounded-2xl shadow-lg">
-                <FilterBox
-                  title="Compounds"
-                  items={compounds}
-                  selected={compound}
-                  onSelect={setCompound}
-                />
+              <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                <div className="bg-gradient-to-br from-white/80 to-gray-50/80 p-1 rounded-2xl shadow-xl backdrop-blur-sm border border-gray-100/30">
+                  <FilterBox
+                    title="Compounds"
+                    items={compounds}
+                    selected={compound}
+                    onSelect={setCompound}
+                  />
+                </div>
               </div>
             </div>
-
           </div>
 
-          {/* Products */}
+          {/* Products Section */}
           <div className="lg:w-3/4">
-
-            {/* Results Info */}
-            <div className="mb-6 p-4 bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-2xl border border-gray-100">
-              <p className="text-gray-700">
-                Showing <span className="font-bold text-[#2596be]">{data.length}</span> of <span className="font-bold text-[#2596be]">{filtered.length}</span> products
+            {/* Enhanced Results Info */}
+            <div className="mb-6 p-4 bg-gradient-to-r from-[#2596be]/10 to-[#122E34]/10 rounded-2xl border border-gray-100/50 backdrop-blur-sm shadow-sm">
+              <p className="text-gray-700 flex flex-wrap items-center gap-2">
+                <span className="font-semibold text-[#2596be] bg-white px-3 py-1 rounded-full shadow-sm">
+                  {data.length}
+                </span>
+                <span>of</span>
+                <span className="font-semibold text-[#122E34] bg-white px-3 py-1 rounded-full shadow-sm">
+                  {filtered.length}
+                </span>
+                <span>products</span>
+                
                 {brand !== 'All' && (
-                  <span className="ml-2">
-                    • Brand: <span className="font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] bg-clip-text text-transparent">{brand}</span>
+                  <span className="ml-2 inline-flex items-center gap-1">
+                    <span className="text-gray-500">•</span>
+                    <span className="font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] bg-clip-text text-transparent">
+                      {brand}
+                    </span>
                   </span>
                 )}
+                
                 {compound !== 'All' && (
-                  <span className="ml-2">
-                    • Compound: <span className="font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] bg-clip-text text-transparent">{compound}</span>
+                  <span className="ml-2 inline-flex items-center gap-1">
+                    <span className="text-gray-500">•</span>
+                    <span className="font-semibold bg-gradient-to-r from-[#2596be] to-[#122E34] bg-clip-text text-transparent">
+                      {compound}
+                    </span>
                   </span>
                 )}
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-
               {data.map((p) => (
                 <ProductCard key={p.slug} product={p} />
               ))}
-
             </div>
 
             {totalPages > 1 && (
@@ -402,12 +412,10 @@ export default function ProductsPage() {
                 onChange={setPage}
               />
             )}
-
           </div>
-
         </div>
 
-        {/* Back Button with Updated Gradient */}
+        {/* Enhanced Back Button */}
         <div className="text-center mt-12">
           <Link
             href="/"
@@ -416,15 +424,13 @@ export default function ProductsPage() {
             {/* Shine effect */}
             <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             
-            <svg className="w-5 h-5 relative" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 relative group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             <span className="relative">Back to Home</span>
           </Link>
         </div>
-
       </div>
-
     </div>
   );
 }
