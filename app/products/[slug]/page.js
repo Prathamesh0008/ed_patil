@@ -1,4 +1,3 @@
-// app/products/[slug]/page.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,62 +5,75 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
 import products from '../../data/en';
-//import { useCart } from '@/app/context/CartContext';
-//import products from '@/data/products';
-//import products from '../../../data/products';
-
+import { getPriceByQty } from '../../utils/getPriceByQty';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { slug } = params;
-    const { addToCart } = useCart();
-  
+  const { addToCart } = useCart();
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  
+
+  // ------------------------------------------------------------
+  // 1. Load product data when slug is available
+  // ------------------------------------------------------------
   useEffect(() => {
     if (slug) {
-      // Find product from your actual product data
       const foundProduct = products[slug];
-      
+
       if (foundProduct) {
         setProduct({
           ...foundProduct,
-          slug: slug,
-          price: parseFloat(foundProduct.price) || 19.99,
-          rating: 4.5, // Default rating
-          stock: 50 // Default stock
+          slug,                                   // ensure slug is set
+          price: parseFloat(foundProduct.price) || 0,
+          rating: foundProduct.rating || 4.5,
+          stock: foundProduct.stock || 50,
+          image: foundProduct.image || '/products/default.png',
+          // Provide default empty arrays/values for all template fields
+          overview: foundProduct.overview || [],
+          how_it_works: foundProduct.how_it_works || [],
+          sideEffects: foundProduct.sideEffects || [],
+          administration: foundProduct.administration || [],
+          warnings: foundProduct.warnings || [],
+          tips: foundProduct.tips || [],
+          additionalImages: foundProduct.additionalImages || [],
+          form: foundProduct.form || 'Tablet',
         });
       }
       setLoading(false);
     }
   }, [slug]);
-  
+
+  // ------------------------------------------------------------
+  // 2. Cart actions
+  // ------------------------------------------------------------
   const handleAddToCart = () => {
-  if (!product) return;
+    if (!product) return;
+    addToCart({
+      id: product.slug,
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      quantity,
+      image: product.image,
+      brand: product.brand,
+      dosage: product.dosage,
+      packSize: product.packSize,
+    });
+  };
 
-  addToCart({
-    id: product.slug,
-    slug: product.slug,
-    name: product.name,
-    price: product.price,
-    quantity: quantity,
-    image: product.image || '/products/default.png',
-    brand: product.brand,
-    dosage: product.dosage,
-    packSize: product.packSize,
-  });
-};
-
-  
   const handleBuyNow = () => {
     handleAddToCart();
     router.push('/checkout');
   };
-  
+
+  // ------------------------------------------------------------
+  // 3. Loading state
+  // ------------------------------------------------------------
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -72,7 +84,10 @@ export default function ProductDetailPage() {
       </div>
     );
   }
-  
+
+  // ------------------------------------------------------------
+  // 4. Product not found
+  // ------------------------------------------------------------
   if (!product) {
     return (
       <div className="min-h-screen bg-white">
@@ -91,7 +106,10 @@ export default function ProductDetailPage() {
       </div>
     );
   }
-  
+
+  // ------------------------------------------------------------
+  // 5. Render product detail page
+  // ------------------------------------------------------------
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -105,7 +123,7 @@ export default function ProductDetailPage() {
             <span className="text-[#0E1D21] font-medium">{product.name}</span>
           </nav>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
           <div>
@@ -113,8 +131,8 @@ export default function ProductDetailPage() {
               {/* Main Image */}
               <div className="mb-4">
                 <div className="w-full h-96 bg-gradient-to-br from-[#2596be]/5 to-[#122E34]/5 rounded-2xl flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={product.additionalImages?.[selectedImage] || product.image || '/products/default.png'} 
+                  <img
+                    src={product.additionalImages?.[selectedImage] || product.image || '/products/default.png'}
                     alt={product.name}
                     className="w-full h-full object-contain p-4"
                     onError={(e) => {
@@ -124,7 +142,7 @@ export default function ProductDetailPage() {
                   />
                 </div>
               </div>
-              
+
               {/* Thumbnail Images */}
               {product.additionalImages && product.additionalImages.length > 0 && (
                 <div className="flex gap-2 overflow-x-auto pb-2">
@@ -132,10 +150,12 @@ export default function ProductDetailPage() {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`flex-shrink-0 w-20 h-20 rounded-lg border-2 ${selectedImage === index ? 'border-[#2596be]' : 'border-[#ABAFB5]/30'} overflow-hidden`}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg border-2 ${
+                        selectedImage === index ? 'border-[#2596be]' : 'border-[#ABAFB5]/30'
+                      } overflow-hidden`}
                     >
-                      <img 
-                        src={img} 
+                      <img
+                        src={img}
                         alt={`${product.name} view ${index + 1}`}
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -147,7 +167,7 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               )}
-              
+
               {/* Product Info Tags */}
               <div className="flex flex-wrap gap-2 mt-6">
                 <span className="px-3 py-1 bg-[#2596be]/10 text-[#2596be] text-xs font-semibold rounded-full border border-[#2596be]/20">
@@ -164,14 +184,14 @@ export default function ProductDetailPage() {
                 </span>
               </div>
             </div>
-            
+
             {/* Product Details Tabs */}
             <div className="bg-white rounded-2xl border border-[#ABAFB5]/30 p-6">
               <h3 className="text-lg font-bold text-[#0E1D21] mb-4">Product Details</h3>
-              
+
               <div className="space-y-6">
                 {/* Overview */}
-                {product.overview && (
+                {product.overview && product.overview.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">Overview</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -181,9 +201,9 @@ export default function ProductDetailPage() {
                     </ul>
                   </div>
                 )}
-                
+
                 {/* How It Works */}
-                {product.how_it_works && (
+                {product.how_it_works && product.how_it_works.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">How It Works</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -193,9 +213,9 @@ export default function ProductDetailPage() {
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Side Effects */}
-                {product.sideEffects && (
+                {product.sideEffects && product.sideEffects.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">Possible Side Effects</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -205,9 +225,9 @@ export default function ProductDetailPage() {
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Administration */}
-                {product.administration && (
+                {product.administration && product.administration.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">Administration</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -217,9 +237,9 @@ export default function ProductDetailPage() {
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Warnings */}
-                {product.warnings && (
+                {product.warnings && product.warnings.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">Warnings</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -229,9 +249,9 @@ export default function ProductDetailPage() {
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Tips */}
-                {product.tips && (
+                {product.tips && product.tips.length > 0 && (
                   <div>
                     <h4 className="font-medium text-[#0E1D21] mb-2">Usage Tips</h4>
                     <ul className="list-disc pl-5 space-y-1 text-[#677E8A]">
@@ -244,14 +264,14 @@ export default function ProductDetailPage() {
               </div>
             </div>
           </div>
-          
+
           {/* Purchase Info */}
           <div>
             <div className="sticky top-8">
               <div className="bg-white rounded-2xl border border-[#ABAFB5]/30 p-8 mb-6">
                 <h1 className="text-2xl font-bold text-[#0E1D21] mb-2">{product.name}</h1>
                 <p className="text-[#677E8A] mb-6">Product ID: {product.slug}</p>
-                
+
                 {/* Product Specifications */}
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between py-2 border-b border-[#ABAFB5]/10">
@@ -271,19 +291,19 @@ export default function ProductDetailPage() {
                     <span className="text-[#0E1D21] font-medium">{product.form}</span>
                   </div>
                 </div>
-                
+
                 {/* Price */}
                 <div className="mb-6">
                   <div className="text-3xl font-bold text-[#2596be] mb-1">${product.price.toFixed(2)}</div>
                   <p className="text-[#677E8A]">{product.packSize}</p>
                 </div>
-                
+
                 {/* Quantity Selector */}
                 <div className="mb-6">
                   <label className="block text-[#0E1D21] font-medium mb-2">Quantity</label>
                   <div className="flex items-center">
                     <button
-                      onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                       disabled={quantity <= 1}
                       className="w-12 h-12 rounded-l-xl border border-[#ABAFB5] flex items-center justify-center hover:bg-[#ABAFB5]/10 disabled:opacity-50"
                     >
@@ -293,7 +313,7 @@ export default function ProductDetailPage() {
                       {quantity}
                     </div>
                     <button
-                      onClick={() => setQuantity(q => q + 1)}
+                      onClick={() => setQuantity((q) => q + 1)}
                       className="w-12 h-12 rounded-r-xl border border-[#ABAFB5] flex items-center justify-center hover:bg-[#ABAFB5]/10"
                     >
                       +
@@ -303,7 +323,7 @@ export default function ProductDetailPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Action Buttons */}
                 <div className="space-y-4">
                   <button
@@ -313,7 +333,7 @@ export default function ProductDetailPage() {
                   >
                     🛒 Add to Cart
                   </button>
-                  
+
                   <button
                     onClick={handleBuyNow}
                     disabled={product.stock <= 0}
@@ -322,7 +342,7 @@ export default function ProductDetailPage() {
                     ⚡ Buy Now
                   </button>
                 </div>
-                
+
                 {/* Delivery Info */}
                 <div className="mt-6 pt-6 border-t border-[#ABAFB5]/20">
                   <div className="flex items-center text-sm text-[#677E8A]">
@@ -335,11 +355,11 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Benefits Section */}
               <div className="bg-white rounded-2xl border border-[#ABAFB5]/30 p-8">
                 <h3 className="text-lg font-bold text-[#0E1D21] mb-6">Why Buy From Us?</h3>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#2596be]/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -347,20 +367,24 @@ export default function ProductDetailPage() {
                     </div>
                     <div>
                       <h4 className="font-medium text-[#0E1D21] mb-1">Authentic Products</h4>
-                      <p className="text-[#677E8A] text-sm">100% genuine medications from licensed manufacturers</p>
+                      <p className="text-[#677E8A] text-sm">
+                        100% genuine medications from licensed manufacturers
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#2596be]/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <span className="text-[#2596be]">🚚</span>
                     </div>
                     <div>
                       <h4 className="font-medium text-[#0E1D21] mb-1">Fast & Discreet Shipping</h4>
-                      <p className="text-[#677E8A] text-sm">Free shipping over $100. Plain packaging for privacy</p>
+                      <p className="text-[#677E8A] text-sm">
+                        Free shipping over $100. Plain packaging for privacy
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-[#2596be]/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <span className="text-[#2596be]">📞</span>

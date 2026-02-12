@@ -1,10 +1,12 @@
+// File: app/account/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
 import {
+  // Core icons
   User, Phone, MapPin, Calendar, Shield, Bell,
   Heart, Pill, Clock, Package, Settings, LogOut, Edit,
   CheckCircle, AlertCircle, ChevronRight, CreditCard,
@@ -18,7 +20,9 @@ import {
   MoreVertical, ExternalLink, Copy, Printer, Send,
   CalendarDays, Clock as ClockIcon, Users, Globe,
   CheckSquare, Square, BellOff, BellRing, EyeOff,
-  Upload, RefreshCw, X, Plus, Minus, RotateCcw
+  Upload, RefreshCw, X, Plus, Minus, RotateCcw,
+  // Additional icons for orders tab
+  Truck, XCircle, AlertTriangle, ArrowUpDown, ShoppingBag, DollarSign
 } from 'lucide-react';
 
 export default function AccountPage() {
@@ -100,21 +104,15 @@ export default function AccountPage() {
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-           
-
-            {/* User Profile */}
             <div className="flex items-center gap-4">
-           
-              
+              {/* User Profile */}
               <div className="relative group">
-             
                 {/* Dropdown Menu */}
                 <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-2xl border border-[#E5E7EB] py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                   <div className="px-4 py-3 border-b border-[#E5E7EB]">
                     <p className="text-sm font-medium text-[#0E1D21]">{user.firstName} {user.lastName}</p>
                     <p className="text-xs text-[#677E8A] truncate">{user.email}</p>
                   </div>
-                  
                   <div className="py-2">
                     <button onClick={() => setActiveTab('profile')} className="flex items-center gap-3 w-full px-4 py-2 text-sm text-[#677E8A] hover:bg-gray-50 hover:text-[#2596be] transition-colors">
                       <User className="h-4 w-4" />
@@ -129,7 +127,6 @@ export default function AccountPage() {
                       Help & Support
                     </button>
                   </div>
-                  
                   <div className="border-t border-[#E5E7EB] pt-2">
                     <button
                       onClick={handleLogout}
@@ -153,15 +150,11 @@ export default function AccountPage() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
-                {/* <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <User className="h-6 w-6" />
-                </div> */}
                 <div>
                   <h1 className="text-2xl font-bold">Welcome back, {user.firstName}! 👋</h1>
                   <p className="text-blue-100">Here's your health dashboard overview</p>
                 </div>
               </div>
-              
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle className="h-4 w-4 text-green-300" />
@@ -177,7 +170,6 @@ export default function AccountPage() {
                 </div>
               </div>
             </div>
-            
             {/* Health Score */}
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 min-w-[200px]">
               <div className="flex items-center justify-between mb-2">
@@ -269,29 +261,47 @@ export default function AccountPage() {
                 </div>
               </div>
             </div>
-
-            {/* Quick Links */}
-            <div className="mt-6 bg-white rounded-2xl shadow-lg border border-[#E5E7EB] p-4">
-              <h4 className="text-sm font-semibold text-[#0E1D21] mb-3">Quick Links</h4>
-              <div className="space-y-2">
-                <Link href="/shop" className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50">
-                  <ShoppingCart className="h-4 w-4" />
-                  Shop Medicines
-                </Link>
-                <Link href="/consult" className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50">
-                  <MessageSquare className="h-4 w-4" />
-                  Consult Doctor
-                </Link>
-                <Link href="/appointments" className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50">
-                  <Calendar className="h-4 w-4" />
-                  Book Appointment
-                </Link>
-                <Link href="/support" className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50">
-                  <FileText className="h-4 w-4" />
-                  Get Support
-                </Link>
-              </div>
-            </div>
+{/* Quick Links */}
+<div className="mt-6 bg-white rounded-2xl shadow-lg border border-[#E5E7EB] p-4">
+  <h4 className="text-sm font-semibold text-[#0E1D21] mb-3">Quick Links</h4>
+  <div className="space-y-2">
+    <Link 
+      href="/shop" 
+      className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50"
+    >
+      <ShoppingCart className="h-4 w-4" />
+      Shop Medicines
+    </Link>
+    <Link 
+      href="/consult" 
+      className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50"
+    >
+      <MessageSquare className="h-4 w-4" />
+      Consult Doctor
+    </Link>
+    <Link 
+      href="/appointments" 
+      className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50"
+    >
+      <Calendar className="h-4 w-4" />
+      Book Appointment
+    </Link>
+    <Link 
+      href="/orders" 
+      className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50"
+    >
+      <Package className="h-4 w-4" />
+      Order Management
+    </Link>
+    <Link 
+      href="/support" 
+      className="flex items-center gap-2 text-sm text-[#677E8A] hover:text-[#2596be] p-2 rounded-lg hover:bg-gray-50"
+    >
+      <FileText className="h-4 w-4" />
+      Get Support
+    </Link>
+  </div>
+</div>
           </aside>
 
           {/* Main Content Area */}
@@ -375,12 +385,15 @@ export default function AccountPage() {
           </div>
         </div>
       </main>
-
     </div>
   );
 }
 
-// Component: Overview Tab
+// ============================================================================
+// TAB COMPONENTS
+// ============================================================================
+
+// ---------- Overview Tab ----------
 function OverviewTab({ user }) {
   const router = useRouter();
   
@@ -421,7 +434,7 @@ function OverviewTab({ user }) {
         })}
       </div>
 
-      {/* Health Summary */}
+      {/* Health Summary & Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
           <div className="flex items-center justify-between mb-4">
@@ -450,7 +463,6 @@ function OverviewTab({ user }) {
           </div>
         </div>
 
-        {/* Recent Activity */}
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
           <h3 className="font-semibold text-[#0E1D21] mb-4">Recent Activity</h3>
           <div className="space-y-4">
@@ -478,33 +490,11 @@ function OverviewTab({ user }) {
           </div>
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
-        <h3 className="font-semibold text-[#0E1D21] mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {quickActions.map((action, index) => {
-            const Icon = action.icon;
-            return (
-              <button
-                key={index}
-                onClick={action.action}
-                className="flex flex-col items-center justify-center p-4 rounded-xl border border-[#E5E7EB] hover:border-[#2596be]/30 hover:shadow-md transition-all group"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${action.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                  <Icon className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-sm font-medium text-[#0E1D21] text-center">{action.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
 
-// Component: Activity Item
+// ---------- Activity Item ----------
 function ActivityItem({ icon: Icon, title, description, time, color }) {
   return (
     <div className="flex items-start gap-3">
@@ -520,7 +510,7 @@ function ActivityItem({ icon: Icon, title, description, time, color }) {
   );
 }
 
-// Component: Profile Tab with Orders
+// ---------- Profile Tab ----------
 function ProfileTab({ user, formatDate, formatPhone }) {
   const recentOrders = [
     { id: 'ORD-789', date: 'Mar 15, 2024', items: 3, total: 145.99, status: 'Delivered' },
@@ -530,7 +520,6 @@ function ProfileTab({ user, formatDate, formatPhone }) {
 
   return (
     <div className="space-y-6">
-      {/* Personal Information Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Personal Details */}
         <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
@@ -617,24 +606,12 @@ function ProfileTab({ user, formatDate, formatPhone }) {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Order ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Items
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Total
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Action
-                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Order ID</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Items</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Total</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -643,15 +620,9 @@ function ProfileTab({ user, formatDate, formatPhone }) {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="font-medium text-[#0E1D21]">{order.id}</span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">
-                    {order.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">
-                    {order.items} items
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-[#0E1D21]">
-                    ${order.total.toFixed(2)}
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">{order.date}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">{order.items} items</td>
+                  <td className="px-6 py-4 whitespace-nowrap font-medium text-[#0E1D21]">${order.total.toFixed(2)}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                       order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
@@ -662,13 +633,9 @@ function ProfileTab({ user, formatDate, formatPhone }) {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button className="text-[#2596be] hover:text-[#122E34] font-medium mr-3">
-                      View
-                    </button>
+                    <button className="text-[#2596be] hover:text-[#122E34] font-medium mr-3">View</button>
                     {order.status === 'Delivered' && (
-                      <button className="text-[#2596be] hover:text-[#122E34] font-medium">
-                        Reorder
-                      </button>
+                      <button className="text-[#2596be] hover:text-[#122E34] font-medium">Reorder</button>
                     )}
                   </td>
                 </tr>
@@ -676,7 +643,6 @@ function ProfileTab({ user, formatDate, formatPhone }) {
             </tbody>
           </table>
         </div>
-
         <div className="mt-4 text-center">
           <button className="text-[#2596be] font-medium hover:text-[#122E34] transition-colors">
             View All Orders →
@@ -684,7 +650,7 @@ function ProfileTab({ user, formatDate, formatPhone }) {
         </div>
       </div>
 
-      {/* Account Information */}
+      {/* Account Information Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-4 text-center">
           <Calendar className="h-6 w-6 text-[#2596be] mx-auto mb-2" />
@@ -711,7 +677,7 @@ function ProfileTab({ user, formatDate, formatPhone }) {
   );
 }
 
-// Component: Health Tab
+// ---------- Health Tab ----------
 function HealthTab({ user }) {
   const [selectedCategory, setSelectedCategory] = useState('records');
 
@@ -724,7 +690,6 @@ function HealthTab({ user }) {
 
   return (
     <div className="space-y-6">
-      {/* Category Tabs */}
       <div className="flex space-x-2 border-b border-[#E5E7EB]">
         {categories.map((category) => (
           <button
@@ -741,7 +706,6 @@ function HealthTab({ user }) {
         ))}
       </div>
 
-      {/* Content */}
       {selectedCategory === 'records' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <HealthRecord label="Blood Pressure" value="120/80" status="Normal" icon={Activity} />
@@ -775,7 +739,6 @@ function HealthTab({ user }) {
         </div>
       )}
 
-      {/* Health Actions */}
       <div className="flex gap-3 pt-6 border-t border-[#E5E7EB]">
         <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#2596be] to-[#122E34] text-white font-medium hover:bg-[#122E34] transition-colors">
           <Plus className="h-4 w-4" />
@@ -790,7 +753,6 @@ function HealthTab({ user }) {
   );
 }
 
-// Component: Health Record
 function HealthRecord({ label, value, status, icon: Icon }) {
   const statusColor = {
     Normal: 'bg-green-100 text-green-800',
@@ -818,7 +780,6 @@ function HealthRecord({ label, value, status, icon: Icon }) {
   );
 }
 
-// Component: Vaccine Record
 function VaccineRecord({ name, date, status }) {
   return (
     <div className="flex items-center justify-between p-4 rounded-xl border border-[#E5E7EB] hover:bg-gray-50 transition-colors">
@@ -840,7 +801,6 @@ function VaccineRecord({ name, date, status }) {
   );
 }
 
-// Component: Test Record
 function TestRecord({ name, date, doctor }) {
   return (
     <div className="flex items-center justify-between p-4 rounded-xl border border-[#E5E7EB] hover:bg-gray-50 transition-colors">
@@ -861,7 +821,6 @@ function TestRecord({ name, date, doctor }) {
   );
 }
 
-// Component: Timeline Event
 function TimelineEvent({ date, title, description, status }) {
   return (
     <div className="flex gap-4">
@@ -882,115 +841,608 @@ function TimelineEvent({ date, title, description, status }) {
   );
 }
 
-// Component: Orders Tab
+// ---------- ORDERS TAB (Full Implementation with Status Dropdown) ----------
 function OrdersTab({ user }) {
-  const orders = [
-    { id: 'ORD-789', date: 'Mar 15, 2024', items: 3, total: 145.99, status: 'Delivered' },
-    { id: 'ORD-788', date: 'Mar 10, 2024', items: 2, total: 89.50, status: 'Shipped' },
-    { id: 'ORD-787', date: 'Mar 5, 2024', items: 1, total: 45.99, status: 'Processing' },
-  ];
+  const router = useRouter();
+  const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [filters, setFilters] = useState({
+    status: 'all',
+    sortBy: 'newest',
+    search: ''
+  });
+
+  // Load orders from localStorage on mount
+  useEffect(() => {
+    if (user?.id) {
+      loadOrders();
+    }
+  }, [user]);
+
+  // Apply filters & sorting whenever orders or filters change
+  useEffect(() => {
+    filterAndSortOrders();
+  }, [orders, filters]);
+
+  const loadOrders = () => {
+    setLoading(true);
+    try {
+      const allOrders = JSON.parse(localStorage.getItem('edpharma_orders') || '[]');
+      const userOrders = allOrders.filter(order => order.userId === user.id);
+      userOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setOrders(userOrders);
+      setFilteredOrders(userOrders);
+    } catch (error) {
+      console.error('Error loading orders:', error);
+      setOrders([]);
+      setFilteredOrders([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filterAndSortOrders = () => {
+    let result = [...orders];
+
+    if (filters.status !== 'all') {
+      result = result.filter(order => order.status === filters.status);
+    }
+
+    if (filters.search.trim()) {
+      const query = filters.search.toLowerCase();
+      result = result.filter(order =>
+        order.id.toLowerCase().includes(query) ||
+        order.items.some(item => item.name.toLowerCase().includes(query))
+      );
+    }
+
+    switch (filters.sortBy) {
+      case 'newest':
+        result.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case 'oldest':
+        result.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      case 'highest':
+        result.sort((a, b) => b.total - a.total);
+        break;
+      case 'lowest':
+        result.sort((a, b) => a.total - b.total);
+        break;
+    }
+
+    setFilteredOrders(result);
+  };
+
+  // Universal status change handler
+  const handleStatusChange = (orderId, newStatus) => {
+    try {
+      const allOrders = JSON.parse(localStorage.getItem('edpharma_orders') || '[]');
+      const index = allOrders.findIndex(o => o.id === orderId);
+      if (index !== -1) {
+        allOrders[index].status = newStatus;
+        localStorage.setItem('edpharma_orders', JSON.stringify(allOrders));
+
+        // Update local state
+        setOrders(prev =>
+          prev.map(order =>
+            order.id === orderId ? { ...order, status: newStatus } : order
+          )
+        );
+
+        // Also update selected order if modal is open
+        if (selectedOrder?.id === orderId) {
+          setSelectedOrder(prev => ({ ...prev, status: newStatus }));
+        }
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      alert('Failed to update order status. Please try again.');
+    }
+  };
+
+  const handleCancelOrder = (orderId) => {
+    handleStatusChange(orderId, 'cancelled');
+  };
+
+  const stats = {
+    total: orders.length,
+    processing: orders.filter(o => o.status === 'processing').length,
+    shipped: orders.filter(o => o.status === 'shipped').length,
+    delivered: orders.filter(o => o.status === 'delivered').length,
+    totalSpent: orders.reduce((sum, order) => sum + order.total, 0)
+  };
+
+  // Status configuration – using account page color palette
+  const statusConfig = {
+    processing: {
+      color: 'bg-amber-100 text-amber-800 border-amber-200',
+      icon: Clock,
+      label: 'Processing'
+    },
+    shipped: {
+      color: 'bg-blue-100 text-blue-800 border-blue-200',
+      icon: Truck,
+      label: 'Shipped'
+    },
+    delivered: {
+      color: 'bg-green-100 text-green-800 border-green-200',
+      icon: CheckCircle,
+      label: 'Delivered'
+    },
+    cancelled: {
+      color: 'bg-red-100 text-red-800 border-red-200',
+      icon: XCircle,
+      label: 'Cancelled'
+    },
+    pending: {
+      color: 'bg-orange-100 text-orange-800 border-orange-200',
+      icon: AlertTriangle,
+      label: 'Pending Review'
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="w-12 h-12 border-4 border-[#2596be]/20 border-t-[#2596be] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {/* Order Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-4">
-          <p className="text-sm text-[#677E8A]">Total Spent</p>
-          <p className="text-2xl font-bold text-[#0E1D21]">$1,245.78</p>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-5 border border-[#E5E7EB]">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-[#677E8A]">Total Orders</p>
+              <p className="text-2xl font-bold text-[#0E1D21] mt-1">{stats.total}</p>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center">
+              <ShoppingBag className="h-6 w-6 text-white" />
+            </div>
+          </div>
         </div>
-        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-4">
-          <p className="text-sm text-[#677E8A]">Avg. Order Value</p>
-          <p className="text-2xl font-bold text-[#0E1D21]">$93.76</p>
+        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-5 border border-[#E5E7EB]">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-[#677E8A]">Processing</p>
+              <p className="text-2xl font-bold text-[#0E1D21] mt-1">{stats.processing}</p>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 flex items-center justify-center">
+              <Clock className="h-6 w-6 text-white" />
+            </div>
+          </div>
         </div>
-        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-4">
-          <p className="text-sm text-[#677E8A]">Savings This Year</p>
-          <p className="text-2xl font-bold text-[#0E1D21]">$245.50</p>
+        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-5 border border-[#E5E7EB]">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-[#677E8A]">Delivered</p>
+              <p className="text-2xl font-bold text-[#0E1D21] mt-1">{stats.delivered}</p>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+              <CheckCircle className="h-6 w-6 text-white" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-5 border border-[#E5E7EB]">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-[#677E8A]">Total Spent</p>
+              <p className="text-2xl font-bold text-[#0E1D21] mt-1">
+                ${stats.totalSpent.toFixed(2)}
+              </p>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+              <DollarSign className="h-6 w-6 text-white" />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Orders Table */}
-      <div className="overflow-hidden rounded-xl border border-[#E5E7EB]">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Order ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Items
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Total
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#677E8A] uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="font-medium text-[#0E1D21]">{order.id}</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">
-                    {order.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#677E8A]">
-                    {order.items} items
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-[#0E1D21]">
-                    ${order.total.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                      order.status === 'Shipped' ? 'bg-blue-100 text-blue-800' :
-                      'bg-amber-100 text-amber-800'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button className="text-[#2596be] hover:text-[#122E34] font-medium mr-3">
-                      View
-                    </button>
-                    {order.status === 'Delivered' && (
-                      <button className="text-[#2596be] hover:text-[#122E34] font-medium">
-                        Reorder
-                      </button>
+      {/* Filter Bar */}
+      <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-[#0E1D21] mb-2">
+              <Filter className="h-4 w-4 text-[#677E8A]" />
+              Status
+            </label>
+            <select
+              value={filters.status}
+              onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E5E7EB] bg-white text-[#0E1D21] focus:outline-none focus:ring-2 focus:ring-[#2596be]/20 focus:border-[#2596be]"
+            >
+              <option value="all">All Statuses</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="pending">Pending Review</option>
+            </select>
+          </div>
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-[#0E1D21] mb-2">
+              <ArrowUpDown className="h-4 w-4 text-[#677E8A]" />
+              Sort By
+            </label>
+            <select
+              value={filters.sortBy}
+              onChange={(e) => setFilters(prev => ({ ...prev, sortBy: e.target.value }))}
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E5E7EB] bg-white text-[#0E1D21] focus:outline-none focus:ring-2 focus:ring-[#2596be]/20 focus:border-[#2596be]"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="highest">Highest Amount</option>
+              <option value="lowest">Lowest Amount</option>
+            </select>
+          </div>
+          <div className="md:col-span-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[#0E1D21] mb-2">
+              <Search className="h-4 w-4 text-[#677E8A]" />
+              Search Orders
+            </label>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#677E8A]" />
+              <input
+                type="text"
+                value={filters.search}
+                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                placeholder="Order ID or product name..."
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#E5E7EB] bg-white text-[#0E1D21] placeholder:text-[#677E8A] focus:outline-none focus:ring-2 focus:ring-[#2596be]/20 focus:border-[#2596be]"
+              />
+              {filters.search && (
+                <button
+                  onClick={() => setFilters(prev => ({ ...prev, search: '' }))}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#677E8A] hover:text-[#2596be]"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Orders List */}
+      <div className="space-y-4">
+        {filteredOrders.length === 0 ? (
+          <div className="bg-white rounded-xl border border-[#E5E7EB] p-12 text-center">
+            <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <Package className="h-10 w-10 text-[#677E8A]" />
+            </div>
+            <h3 className="text-lg font-semibold text-[#0E1D21] mb-2">No orders found</h3>
+            <p className="text-[#677E8A] mb-6">
+              {filters.status !== 'all' || filters.search
+                ? 'Try adjusting your filters'
+                : "You haven't placed any orders yet"}
+            </p>
+            <button
+              onClick={() => router.push('/shop')}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2596be] to-[#122E34] text-white font-medium hover:shadow-lg transition-shadow"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              Start Shopping
+            </button>
+          </div>
+        ) : (
+          filteredOrders.map(order => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              statusConfig={statusConfig}
+              onViewDetails={() => {
+                setSelectedOrder(order);
+                setShowDetails(true);
+              }}
+              onStatusChange={handleStatusChange}
+            />
+          ))
+        )}
+      </div>
+
+      {/* Order Details Modal */}
+      <OrderDetailsModal
+        order={selectedOrder}
+        isOpen={showDetails}
+        onClose={() => {
+          setShowDetails(false);
+          setSelectedOrder(null);
+        }}
+        onCancelOrder={handleCancelOrder}
+        statusConfig={statusConfig}
+      />
+    </div>
+  );
+}
+
+// ---------- Order Card Component (with Status Dropdown) ----------
+function OrderCard({ order, statusConfig, onViewDetails, onStatusChange }) {
+  const StatusIcon = statusConfig[order.status]?.icon || Clock;
+  const firstItem = order.items?.[0] || {};
+
+  return (
+    <div className="bg-white rounded-xl border border-[#E5E7EB] p-5 hover:shadow-md transition-shadow duration-200">
+      {/* Header Row */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+        <div className="flex items-start gap-4">
+          {/* Product Image */}
+          <div className="w-20 h-20 bg-white rounded-lg border border-[#E5E7EB] p-2 flex-shrink-0">
+            <img
+              src={firstItem.image || '/products/default.png'}
+              alt={firstItem.name || 'Product'}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = '/products/default.png';
+              }}
+            />
+          </div>
+
+          {/* Order Info */}
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <h3 className="font-bold text-lg text-[#0E1D21]">{order.id}</h3>
+              <span className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center gap-1.5 ${statusConfig[order.status]?.color}`}>
+                <StatusIcon className="h-3.5 w-3.5" />
+                {statusConfig[order.status]?.label}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-4 text-sm text-[#677E8A]">
+              <span className="flex items-center gap-1.5">
+                <Calendar className="h-4 w-4" />
+                {new Date(order.date).toLocaleDateString()}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <DollarSign className="h-4 w-4" />
+                ${order.total.toFixed(2)}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Package className="h-4 w-4" />
+                {order.items?.length || 0} item(s)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-2 md:self-center">
+          <button
+            onClick={onViewDetails}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#2596be] to-[#122E34] text-white text-sm font-medium hover:shadow-md transition-shadow"
+          >
+            <Eye className="h-4 w-4" />
+            View Details
+          </button>
+
+          {/* Status Dropdown */}
+          <select
+            value={order.status}
+            onChange={(e) => onStatusChange(order.id, e.target.value)}
+            className="px-3 py-2 rounded-lg border border-[#E5E7EB] bg-white text-[#0E1D21] text-sm focus:outline-none focus:ring-2 focus:ring-[#2596be]/20 focus:border-[#2596be]"
+          >
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="pending">Pending Review</option>
+          </select>
+
+          <button className="p-2 rounded-lg border border-[#E5E7EB] text-[#677E8A] hover:border-[#2596be] hover:text-[#2596be] transition-colors">
+            <Printer className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Footer Row – Shipping, Payment, Delivery */}
+      <div className="border-t border-[#E5E7EB] pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex items-start gap-2">
+            <MapPin className="h-4 w-4 text-[#677E8A] mt-0.5" />
+            <div>
+              <p className="text-xs font-medium text-[#677E8A] uppercase tracking-wider">Shipping</p>
+              <p className="text-sm text-[#0E1D21]">
+                {order.shipping?.city}, {order.shipping?.state}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <CreditCard className="h-4 w-4 text-[#677E8A] mt-0.5" />
+            <div>
+              <p className="text-xs font-medium text-[#677E8A] uppercase tracking-wider">Payment</p>
+              <p className="text-sm text-[#0E1D21]">•••• {order.payment?.last4}</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Truck className="h-4 w-4 text-[#677E8A] mt-0.5" />
+            <div>
+              <p className="text-xs font-medium text-[#677E8A] uppercase tracking-wider">Delivery</p>
+              <p className="text-sm text-[#0E1D21] capitalize">{order.delivery || 'Standard'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Prescription Warning */}
+      {order.items?.some(item => item.isPrescription) && (
+        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 flex items-center gap-2">
+          <FileText className="h-4 w-4 text-blue-600" />
+          <span className="text-sm font-medium text-blue-800">Prescription order</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------- Order Details Modal ----------
+function OrderDetailsModal({ order, isOpen, onClose, onCancelOrder, statusConfig }) {
+  if (!isOpen || !order) return null;
+
+  const StatusIcon = statusConfig[order.status]?.icon || Clock;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-[#0E1D21]">Order Details</h2>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg hover:bg-gray-100 text-[#677E8A] hover:text-[#0E1D21] transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Order Summary Card */}
+          <div className="bg-gray-50 rounded-xl p-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <p className="text-xs text-[#677E8A] uppercase tracking-wider mb-1">Order Number</p>
+                <p className="text-lg font-bold text-[#0E1D21]">{order.id}</p>
+              </div>
+              <div>
+                <p className="text-xs text-[#677E8A] uppercase tracking-wider mb-1">Order Date</p>
+                <p className="text-lg font-bold text-[#0E1D21]">
+                  {new Date(order.date).toLocaleDateString()}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-[#677E8A] uppercase tracking-wider mb-1">Status</p>
+                <span className={`px-3 py-1.5 rounded-full text-sm font-medium border inline-flex items-center gap-1.5 ${statusConfig[order.status]?.color}`}>
+                  <StatusIcon className="h-4 w-4" />
+                  {statusConfig[order.status]?.label}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Order Items */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-[#0E1D21] mb-4">Items Ordered</h3>
+            <div className="space-y-4">
+              {order.items.map((item, idx) => (
+                <div key={idx} className="flex gap-4 p-4 border border-[#E5E7EB] rounded-xl">
+                  <div className="w-20 h-20 bg-white border border-[#E5E7EB] rounded-lg p-2 flex-shrink-0">
+                    <img
+                      src={item.image || '/products/default.png'}
+                      alt={item.name}
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/products/default.png';
+                      }}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:justify-between">
+                      <div>
+                        <p className="font-medium text-[#0E1D21]">{item.name}</p>
+                        <p className="text-sm text-[#677E8A] mt-1">
+                          Qty: {item.quantity} × ${item.price.toFixed(2)}
+                        </p>
+                      </div>
+                      <p className="text-lg font-bold text-[#0E1D21] mt-2 sm:mt-0">
+                        ${(item.quantity * item.price).toFixed(2)}
+                      </p>
+                    </div>
+                    {item.isPrescription && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 mt-2 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        <FileText className="h-3 w-3" />
+                        Prescription Required
+                      </span>
                     )}
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </div>
+          </div>
 
-      {/* Order Actions */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-[#E5E7EB]">
-        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#2596be] to-[#122E34] text-white font-medium hover:shadow-lg transition-shadow">
-          <ShoppingCart className="h-5 w-5" />
-          Place New Order
-        </button>
-        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[#E5E7EB] text-[#677E8A] hover:border-[#2596be] hover:text-[#2596be] transition-colors">
-          <Download className="h-5 w-5" />
-          Export Order History
-        </button>
+          {/* Shipping & Payment */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div className="bg-gray-50 rounded-xl p-5">
+              <h4 className="font-semibold text-[#0E1D21] mb-4 flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-[#2596be]" />
+                Shipping Address
+              </h4>
+              <div className="space-y-1 text-sm">
+                <p className="font-medium">{order.shipping?.fullName}</p>
+                <p>{order.shipping?.address}</p>
+                <p>{order.shipping?.city}, {order.shipping?.state} {order.shipping?.zipCode}</p>
+                <p className="mt-2">{order.shipping?.phone}</p>
+                <p>{order.shipping?.email}</p>
+              </div>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-5">
+              <h4 className="font-semibold text-[#0E1D21] mb-4 flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-[#2596be]" />
+                Payment Information
+              </h4>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-[#677E8A]">Subtotal</span>
+                  <span className="font-medium">${order.subtotal?.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#677E8A]">Shipping</span>
+                  <span className="font-medium">${order.shippingCost?.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#677E8A]">Tax</span>
+                  <span className="font-medium">${order.tax?.toFixed(2)}</span>
+                </div>
+                <div className="border-t border-[#E5E7EB] pt-2 mt-2">
+                  <div className="flex justify-between">
+                    <span className="font-bold text-[#0E1D21]">Total</span>
+                    <span className="font-bold text-[#0E1D21]">${order.total.toFixed(2)}</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-sm text-[#677E8A]">Payment Method</p>
+                  <p className="font-medium">{order.payment?.type} •••• {order.payment?.last4}</p>
+                  <p className="text-sm text-[#677E8A] mt-1">{order.payment?.cardName}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-end border-t border-[#E5E7EB] pt-6">
+            {order.status === 'processing' && (
+              <button
+                onClick={() => {
+                  if (window.confirm('Are you sure you want to cancel this order?')) {
+                    onCancelOrder(order.id);
+                  }
+                }}
+                className="px-6 py-2.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <XCircle className="h-4 w-4" />
+                Cancel Order
+              </button>
+            )}
+            <button className="px-6 py-2.5 rounded-lg border border-[#E5E7EB] text-[#677E8A] hover:border-[#2596be] hover:text-[#2596be] font-medium transition-colors flex items-center justify-center gap-2">
+              <Printer className="h-4 w-4" />
+              Print Invoice
+            </button>
+            <button className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#2596be] to-[#122E34] text-white font-medium hover:shadow-lg transition-shadow flex items-center justify-center gap-2">
+              <Truck className="h-4 w-4" />
+              Track Order
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-// Component: Prescriptions Tab
+// ---------- Prescriptions Tab ----------
 function PrescriptionsTab({ user }) {
   const prescriptions = [
     { name: 'Lisinopril', dosage: '10mg', frequency: 'Once daily', refills: 3, expires: 'Jun 15, 2024' },
@@ -1000,7 +1452,6 @@ function PrescriptionsTab({ user }) {
 
   return (
     <div className="space-y-6">
-      {/* Prescription Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-gradient-to-r from-violet-500/5 to-purple-500/5 rounded-xl p-4">
           <p className="text-sm text-[#677E8A]">Active Prescriptions</p>
@@ -1016,7 +1467,6 @@ function PrescriptionsTab({ user }) {
         </div>
       </div>
 
-      {/* Prescription Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {prescriptions.map((med, index) => (
           <div key={index} className="bg-white rounded-xl border border-[#E5E7EB] p-5 hover:shadow-md transition-shadow">
@@ -1027,7 +1477,6 @@ function PrescriptionsTab({ user }) {
               </div>
               <Pill className="h-8 w-8 text-violet-600" />
             </div>
-            
             <div className="space-y-3 mb-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-[#677E8A]">Frequency</span>
@@ -1042,7 +1491,6 @@ function PrescriptionsTab({ user }) {
                 <span className="font-medium text-[#0E1D21]">{med.expires}</span>
               </div>
             </div>
-            
             <div className="flex gap-2">
               <button className="flex-1 py-2 rounded-lg border border-[#E5E7EB] text-sm font-medium hover:border-[#2596be] hover:text-[#2596be] transition-colors">
                 View Details
@@ -1055,7 +1503,6 @@ function PrescriptionsTab({ user }) {
         ))}
       </div>
 
-      {/* Prescription Actions */}
       <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-[#E5E7EB]">
         <button className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#2596be] to-[#122E34] text-white font-medium hover:shadow-lg transition-shadow">
           <Plus className="h-5 w-5" />
@@ -1074,13 +1521,12 @@ function PrescriptionsTab({ user }) {
   );
 }
 
-// Component: Security Tab
+// ---------- Security Tab ----------
 function SecurityTab({ user }) {
   const [twoFactor, setTwoFactor] = useState(false);
 
   return (
     <div className="space-y-6">
-      {/* Security Status */}
       <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -1094,7 +1540,6 @@ function SecurityTab({ user }) {
         </div>
       </div>
 
-      {/* Security Settings */}
       <div className="space-y-4">
         <SecuritySetting
           icon={Lock}
@@ -1128,7 +1573,6 @@ function SecurityTab({ user }) {
         />
       </div>
 
-      {/* Recent Activity */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
         <h3 className="font-semibold text-lg text-[#0E1D21] mb-4">Recent Login Activity</h3>
         <div className="space-y-3">
@@ -1141,7 +1585,6 @@ function SecurityTab({ user }) {
   );
 }
 
-// Component: Security Setting
 function SecuritySetting({ icon: Icon, title, description, action, status, toggle, toggled }) {
   return (
     <div className="flex items-center justify-between p-4 rounded-xl border border-[#E5E7EB] hover:border-[#2596be]/30 transition-colors">
@@ -1164,7 +1607,6 @@ function SecuritySetting({ icon: Icon, title, description, action, status, toggl
             Inactive
           </span>
         )}
-        
         {toggle ? (
           <label className="relative inline-flex items-center cursor-pointer">
             <input 
@@ -1185,7 +1627,6 @@ function SecuritySetting({ icon: Icon, title, description, action, status, toggl
   );
 }
 
-// Component: Login Activity
 function LoginActivity({ device, location, time, trusted }) {
   return (
     <div className="flex items-center justify-between py-3 border-b border-[#E5E7EB] last:border-0">
@@ -1209,7 +1650,7 @@ function LoginActivity({ device, location, time, trusted }) {
   );
 }
 
-// Component: Subscription Tab
+// ---------- Subscription Tab ----------
 function SubscriptionTab({ user }) {
   const plans = [
     { name: 'Basic', price: 0, features: ['Basic Access', 'Standard Support', 'Limited Storage'], active: false },
@@ -1219,7 +1660,6 @@ function SubscriptionTab({ user }) {
 
   return (
     <div className="space-y-6">
-      {/* Current Plan */}
       <div className="bg-gradient-to-r from-[#2596be]/5 to-[#122E34]/5 rounded-xl p-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
@@ -1240,7 +1680,6 @@ function SubscriptionTab({ user }) {
         </div>
       </div>
 
-      {/* Plan Comparison */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {plans.map((plan) => (
           <div 
@@ -1282,7 +1721,6 @@ function SubscriptionTab({ user }) {
         ))}
       </div>
 
-      {/* Billing History */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
         <h3 className="font-semibold text-lg text-[#0E1D21] mb-4">Billing History</h3>
         <div className="space-y-3">
@@ -1295,7 +1733,6 @@ function SubscriptionTab({ user }) {
   );
 }
 
-// Component: Billing Item
 function BillingItem({ date, amount, status }) {
   return (
     <div className="flex items-center justify-between py-3 border-b border-[#E5E7EB] last:border-0">
@@ -1316,7 +1753,7 @@ function BillingItem({ date, amount, status }) {
   );
 }
 
-// Component: Settings Tab
+// ---------- Settings Tab ----------
 function SettingsTab({ user }) {
   const [notifications, setNotifications] = useState({
     email: true,
@@ -1331,7 +1768,6 @@ function SettingsTab({ user }) {
 
   return (
     <div className="space-y-6">
-      {/* Notification Settings */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
         <h3 className="font-semibold text-lg text-[#0E1D21] mb-4">Notification Preferences</h3>
         <div className="space-y-4">
@@ -1362,7 +1798,6 @@ function SettingsTab({ user }) {
         </div>
       </div>
 
-      {/* Privacy Settings */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
         <h3 className="font-semibold text-lg text-[#0E1D21] mb-4">Privacy Settings</h3>
         <div className="space-y-4">
@@ -1393,7 +1828,6 @@ function SettingsTab({ user }) {
         </div>
       </div>
 
-      {/* Account Management */}
       <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
         <h3 className="font-semibold text-lg text-[#0E1D21] mb-4">Account Management</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1417,7 +1851,6 @@ function SettingsTab({ user }) {
   );
 }
 
-// Component: Toggle Setting
 function ToggleSetting({ label, description, checked, onChange }) {
   return (
     <div className="flex items-center justify-between">

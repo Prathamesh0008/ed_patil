@@ -1,14 +1,16 @@
-// app/cart/page.js
+// File: app/cart/page.jsx
 'use client';
 
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 import { Trash2, ShoppingBag } from 'lucide-react';
+import { getPriceByQty } from '../utils/getPriceByQty'; // ✅ relative import
+import products from '../data/en';
 
 export default function CartPage() {
-  const { cartItems, cartTotal, cartCount, removeFromCart, updateQuantity, clearCart } = useCart();
-  
-  if (cartCount === 0) {
+  const { cart, itemCount, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart();
+
+  if (itemCount === 0) {
     return (
       <div className="min-h-screen bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,25 +29,23 @@ export default function CartPage() {
       </div>
     );
   }
-  
+
   return (
     <div className="min-h-screen bg-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-[#0E1D21] mb-8">Shopping Cart ({cartCount} items)</h1>
-        
+        <h1 className="text-3xl font-bold text-[#0E1D21] mb-8">Shopping Cart ({itemCount} items)</h1>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="space-y-4">
-              {cartItems.map((item, index) => (
+              {cart.map((item) => (
                 <div key={item.id} className="bg-white rounded-2xl border border-[#ABAFB5]/30 p-6">
                   <div className="flex flex-col sm:flex-row gap-6">
-                    {/* Product Image */}
                     <div className="flex-shrink-0">
                       <div className="w-32 h-32 bg-gradient-to-br from-[#2596be]/5 to-[#122E34]/5 rounded-xl flex items-center justify-center">
                         {item.image && item.image !== '/products/default.png' ? (
-                          <img 
-                            src={item.image} 
+                          <img
+                            src={item.image}
                             alt={item.name}
                             className="w-full h-full object-contain p-2"
                           />
@@ -54,8 +54,7 @@ export default function CartPage() {
                         )}
                       </div>
                     </div>
-                    
-                    {/* Product Info */}
+
                     <div className="flex-grow">
                       <div className="flex justify-between">
                         <div>
@@ -70,9 +69,8 @@ export default function CartPage() {
                           <Trash2 size={20} />
                         </button>
                       </div>
-                      
+
                       <div className="mt-4 flex items-center justify-between">
-                        {/* Updated Quantity Buttons with Gradient */}
                         <div className="flex items-center rounded-xl overflow-hidden shadow-sm">
                           <button
                             onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
@@ -85,11 +83,11 @@ export default function CartPage() {
                           >
                             <span className="font-bold text-lg">-</span>
                           </button>
-                          
+
                           <div className="w-12 h-10 bg-white border-y border-[#ABAFB5]/30 flex items-center justify-center">
                             <span className="font-semibold text-[#0E1D21]">{item.quantity}</span>
                           </div>
-                          
+
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="w-10 h-10 flex items-center justify-center bg-gradient-to-r from-[#677E8A] to-[#122E34] text-white hover:from-[#5a6f7a] hover:to-[#0e1d21] active:scale-95 transition-all duration-300"
@@ -97,17 +95,22 @@ export default function CartPage() {
                             <span className="font-bold text-lg">+</span>
                           </button>
                         </div>
-                        
                         <div className="text-xl font-bold text-[#2596be]">
-                          ${(item.price * item.quantity).toFixed(2)}
-                        </div>
+  {(() => {
+    const productData = products[item.slug]; // get full product from en.js
+    const unitPrice = getPriceByQty(productData, item.quantity);
+    const totalPrice = unitPrice * item.quantity;
+
+    return `₹${totalPrice.toFixed(2)}`;
+  })()}
+</div>
+
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
-              
-              {/* Clear Cart Button */}
+
               <div className="flex justify-end">
                 <button
                   onClick={clearCart}
@@ -118,12 +121,11 @@ export default function CartPage() {
               </div>
             </div>
           </div>
-          
-          {/* Order Summary */}
+
           <div>
             <div className="bg-white rounded-2xl border border-[#ABAFB5]/30 p-6 sticky top-8">
               <h2 className="text-xl font-bold text-[#0E1D21] mb-6">Order Summary</h2>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-[#677E8A]">
                   <span>Subtotal</span>
@@ -144,14 +146,14 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-              
+
               <Link
                 href="/checkout"
                 className="block w-full px-6 py-4 bg-gradient-to-r from-[#122E34] to-[#2596be] hover:from-[#0E1D21] hover:to-[#1a7a9a] text-white rounded-xl font-semibold text-center shadow-sm hover:shadow-md transition-all duration-300"
               >
                 Proceed to Checkout
               </Link>
-              
+
               <div className="mt-6 space-y-3 text-sm text-[#677E8A]">
                 <div className="flex items-center">
                   <span className="mr-2">🔒</span>
@@ -167,8 +169,7 @@ export default function CartPage() {
                 </div>
               </div>
             </div>
-            
-            {/* Continue Shopping */}
+
             <Link
               href="/products"
               className="mt-4 block w-full px-6 py-3 border-2 border-[#2596be] text-[#2596be] rounded-xl font-semibold text-center hover:bg-[#2596be]/5 transition-all duration-300"

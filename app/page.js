@@ -971,7 +971,7 @@ export default function HomePage() {
             </Link>
             <Link href="/contact" className={buttonClasses.outline}>
               <span className="flex items-center">
-                Contact Our Team
+                Contact Our Team 
                 <FiArrowUpRight className="ml-2 h-5 w-5" />
               </span>
             </Link>
