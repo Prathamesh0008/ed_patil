@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
+
 import { Mail, Lock, Eye, EyeOff, AlertCircle, ArrowRight, Shield } from 'lucide-react';
 
 export default function LoginPage() {
@@ -67,34 +69,26 @@ export default function LoginPage() {
     setErrors(newErrors);
     return !Object.values(newErrors).some(error => error);
   };
+const { login } = useAuth();  // add this at top inside component
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    setTouched({ email: true, password: true });
-    if (!validateForm()) return;
+  setTouched({ email: true, password: true });
+  if (!validateForm()) return;
 
-    setIsLoading(true);
-    setLoginError('');
+  setIsLoading(true);
+  setLoginError('');
 
-    // Simulate API call – replace with your actual authentication logic
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+  const result = await login(formData.email, formData.password);
 
-      // For demo, accept any non‑empty credentials
-      // In a real app, you would check against your backend
-      if (formData.email && formData.password) {
-        // Successful login – redirect to admin dashboard or account page
-        router.push('/admin'); // or '/account' depending on your routing
-      } else {
-        throw new Error('Invalid credentials');
-      }
-    } catch (error) {
-      setLoginError('Login failed. Please check your credentials and try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  if (!result.success) {
+    setLoginError(result.error || 'Invalid credentials');
+  }
+
+  setIsLoading(false);
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8">

@@ -1,4 +1,3 @@
-// File: app/context/AuthContext.jsx
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
@@ -6,12 +5,12 @@ import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext({});
 
-// Default export – used in layout.jsx
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  // Load user from localStorage on refresh
   useEffect(() => {
     const storedUser = localStorage.getItem('edpharma_user');
     if (storedUser) {
@@ -20,25 +19,56 @@ export default function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('edpharma_user', JSON.stringify(userData));
+  // 🔥 LOGIN FUNCTION (backend connected)
+  const login = async (emailOrPhone, password) => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ emailOrPhone, password }),
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        return { success: false, error: data.error };
+      }
+
+      // Save token
+      localStorage.setItem('edpharma_token', data.token);
+      localStorage.setItem('edpharma_user', JSON.stringify(data.user));
+
+      setUser(data.user);
+
+      // Redirect based on role
+      if (data.user.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/account');
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: 'Login failed' };
+    }
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('edpharma_user');
+    localStorage.removeItem('edpharma_token');
     router.push('/login');
   };
 
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Named export – used in components (account, login, orders, etc.)
 export const useAuth = () => useContext(AuthContext);

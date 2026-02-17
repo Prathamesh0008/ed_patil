@@ -1,3 +1,4 @@
+//app\register\page.js
 'use client';
 
 import { useState } from 'react';
@@ -130,8 +131,27 @@ export default function RegisterPage() {
     setIsLoading(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1200));
-      
+      const res = await fetch("/api/auth/signup", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    phone: formData.phone,
+    password: formData.password,
+  }),
+});
+
+const data = await res.json();
+
+if (!data.success) {
+  alert(data.error);
+  return;
+}
+
+localStorage.setItem("edpharma_token", data.token);
+
       // Create user object
       const user = {
         id: `user_${Math.random().toString(36).substr(2, 9)}`,

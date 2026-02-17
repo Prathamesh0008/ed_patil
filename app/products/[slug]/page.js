@@ -57,7 +57,7 @@ export default function ProductDetailPage() {
       id: product.slug,
       slug: product.slug,
       name: product.name,
-      price: product.price,
+       price: unitPrice,
       quantity,
       image: product.image,
       brand: product.brand,
@@ -65,7 +65,8 @@ export default function ProductDetailPage() {
       packSize: product.packSize,
     });
   };
-
+const unitPrice = getPriceByQty(product, quantity);
+const totalPrice = unitPrice * quantity;
   const handleBuyNow = () => {
     handleAddToCart();
     router.push('/checkout');
@@ -293,10 +294,14 @@ export default function ProductDetailPage() {
                 </div>
 
                 {/* Price */}
-                <div className="mb-6">
-                  <div className="text-3xl font-bold text-[#2596be] mb-1">${product.price.toFixed(2)}</div>
-                  <p className="text-[#677E8A]">{product.packSize}</p>
-                </div>
+                <div className="text-3xl font-bold text-[#2596be] mb-1">
+  ${unitPrice.toFixed(2)}
+</div>
+
+<div className="text-sm text-[#677E8A]">
+  Total: ${totalPrice.toFixed(2)}
+</div>
+
 
                 {/* Quantity Selector */}
                 <div className="mb-6">
