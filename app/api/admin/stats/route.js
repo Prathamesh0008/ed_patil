@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "../../../../lib/mongodb";
 import User from "../../../../models/User";
 import Order from "../../../../models/Order";
-// import { verifyToken } from "../../../../lib/";
+import { verifyToken } from "../../../../lib/auth";
 
 export async function GET(req) {
   const payload = verifyToken(req);

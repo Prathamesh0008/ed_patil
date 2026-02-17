@@ -1,23 +1,22 @@
-import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
-export function verifyToken(req) {
-  try {
-    const authHeader = req.headers.get("authorization");
+const UserSchema = new mongoose.Schema(
+  {
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+    email: { type: String, trim: true, lowercase: true, sparse: true },
+    phone: { type: String, trim: true, sparse: true },
+    password: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+  },
+  { timestamps: true }
+);
 
-    if (!authHeader) {
-      throw new Error("No token provided");
-    }
+UserSchema.index({ email: 1 }, { unique: true, sparse: true });
+UserSchema.index({ phone: 1 }, { unique: true, sparse: true });
 
-    const token = authHeader.split(" ")[1];
-
-    if (!token) {
-      throw new Error("Invalid token format");
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    return decoded;
-  } catch (error) {
-    throw new Error("Unauthorized");
-  }
-}
+export default mongoose.models.User || mongoose.model("User", UserSchema);

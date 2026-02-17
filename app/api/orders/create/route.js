@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
-import { verifyToken } from "../../../lib/auth";
+import { verifyToken } from "../../../../lib/auth";
 
 export async function POST(req) {
   try {
